@@ -1,240 +1,296 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="vi">
+
 <head>
+    <title>Trái Tim Thủ Khoa Lý</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trái Tim Thủ Khoa Lý - Bộ Sưu Tập</title>
     <style>
-        :root {
-            --primary: #ff4d6d;
-            --secondary: #ff758f;
-            --bg: #0b090a;
-            --card-bg: rgba(255, 255, 255, 0.05);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
-
+        html,
         body {
-            background-color: var(--bg);
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-        /* Hiệu ứng nền */
-        .background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
             height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at center, #1a0a0d 0%, #0b090a 100%);
-        }
-
-        .floating-heart {
-            position: absolute;
-            color: var(--primary);
-            opacity: 0.2;
-            animation: float 10s infinite linear;
-            pointer-events: none;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
-        }
-
-        header {
-            margin-top: 60px;
-            text-align: center;
-            z-index: 1;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
-        }
-
-        p.subtitle {
-            color: #a4161a;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .container {
-            max-width: 1000px;
-            width: 90%;
-            margin: 60px 0;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            z-index: 1;
-        }
-
-        .card {
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 40px;
-            text-align: center;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            cursor: pointer;
-            text-decoration: none;
-            color: white;
+            padding: 0;
+            margin: 0;
+            background: #000;
+            overflow: hidden;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative;
-            overflow: hidden;
         }
 
-        .card::before {
-            content: '';
+        canvas {
             position: absolute;
-            top: 0;
-            left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: 0.5s;
         }
 
-        .card:hover::before {
-            left: 100%;
+        #pinkboard {
+            z-index: 1;
+            animation: heart-pulse 1.3s ease-in-out infinite;
         }
 
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 15px 30px rgba(255, 77, 109, 0.2);
-            background: rgba(255, 77, 109, 0.1);
+        @keyframes heart-pulse {
+            0% {
+                transform: scale(0.9);
+            }
+
+            30% {
+                transform: scale(1.1);
+            }
+
+            60% {
+                transform: scale(0.95);
+            }
+
+            100% {
+                transform: scale(0.9);
+            }
         }
 
-        .card-icon {
-            font-size: 40px;
-            margin-bottom: 20px;
-        }
-
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .card-desc {
-            font-size: 0.9rem;
-            color: #ccc;
-            line-height: 1.4;
-        }
-
-        .version-tag {
+        .name-overlay {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--primary);
-            font-size: 10px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        footer {
-            margin-bottom: 40px;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
-            .container { grid-template-columns: 1fr; }
+            z-index: 2;
+            color: #ea80b0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 24px;
+            font-weight: 300;
+            text-shadow: 0 0 20px #ea80b0;
+            opacity: 0.8;
+            letter-spacing: 5px;
+            pointer-events: none;
+            text-transform: uppercase;
         }
     </style>
 </head>
+
 <body>
-    <div class="background" id="bg"></div>
-
-    <header>
-        <h1>Trái Tim Thủ Khoa Lý</h1>
-        <p class="subtitle">Bộ sưu tập hiệu ứng Visual</p>
-    </header>
-
-    <div class="container">
-        <a href="v1.html" class="card">
-            <span class="version-tag">STABLE</span>
-            <div class="card-icon">💖</div>
-            <div class="card-title">Phiên bản 1</div>
-            <div class="card-desc">Hiệu ứng hạt bụi hồng lãng mạn với Canvas.</div>
-        </a>
-
-        <a href="v2.html" class="card">
-            <div class="card-icon">💝</div>
-            <div class="card-title">Phiên bản 2</div>
-            <div class="card-desc">Hiệu ứng trái tim rực rỡ với nhiều lớp chuyển động.</div>
-        </a>
-
-        <a href="v3.html" class="card">
-            <div class="card-icon">💗</div>
-            <div class="card-title">Phiên bản 3</div>
-            <div class="card-desc">Phong cách tối giản nhưng tinh tế.</div>
-        </a>
-
-        <a href="v4.html" class="card">
-            <div class="card-icon">💓</div>
-            <div class="card-title">Phiên bản 4</div>
-            <div class="card-desc">Nhịp đập mạnh mẽ và đầy sức sống.</div>
-        </a>
-
-        <a href="v5.html" class="card">
-            <span class="version-tag">NEW (PYTHON)</span>
-            <div class="card-icon">🔥</div>
-            <div class="card-title">Phiên bản 5</div>
-            <div class="card-desc">Chuyển đổi từ logic Python Tkinter sang Web.</div>
-        </a>
-    </div>
-
-    <footer>
-        &copy; 2024 - Trái Tim Thủ Khoa Lý
-    </footer>
+    <canvas id="pinkboard"></canvas>
 
     <script>
-        // Tạo hiệu ứng tim bay nền
-        const bg = document.getElementById('bg');
-        const hearts = ['❤️', '💖', '💗', '💓', '💕'];
-        
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.className = 'floating-heart';
-            heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-            heart.style.animationDuration = (Math.random() * 5 + 5) + 's';
-            heart.style.opacity = Math.random() * 0.3;
-            
-            bg.appendChild(heart);
-            
-            setTimeout(() => {
-                heart.remove();
-            }, 10000);
+        /*
+         * Cấu hình hiệu ứng
+         */
+        const settings = {
+            particles: {
+                length: 2500,    // Số lượng hạt (Tăng lên để lung linh hơn)
+                duration: 2,     // Thời gian tồn tại của hạt (giây)
+                velocity: 120,    // Tốc độ hạt
+                effect: -0.85,    // Độ phân tán
+                size: 10,         // Kích thước hạt
+            },
+        };
+
+        /*
+         * Polyfill cho RequestAnimationFrame
+         */
+        (function () {
+            let lastTime = 0;
+            const vendors = ["ms", "moz", "webkit", "o"];
+            for (let x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+                window.requestAnimationFrame = window[vendors[x] + "RequestAnimationFrame"];
+                window.cancelAnimationFrame = window[vendors[x] + "CancelAnimationFrame"] || window[vendors[x] + "CancelRequestAnimationFrame"];
+            }
+            if (!window.requestAnimationFrame) {
+                window.requestAnimationFrame = function (callback) {
+                    const currTime = new Date().getTime();
+                    const timeToCall = Math.max(0, 16 - (currTime - lastTime));
+                    const id = window.setTimeout(function () { callback(currTime + timeToCall); }, timeToCall);
+                    lastTime = currTime + timeToCall;
+                    return id;
+                };
+            }
+            if (!window.cancelAnimationFrame) {
+                window.cancelAnimationFrame = function (id) { clearTimeout(id); };
+            }
+        }());
+
+        /*
+         * Lớp Point (Điểm số)
+         */
+        class Point {
+            constructor(x = 0, y = 0) {
+                this.x = x;
+                this.y = y;
+            }
+            clone() { return new Point(this.x, this.y); }
+            length(length) {
+                if (typeof length == 'undefined') return Math.sqrt(this.x * this.x + this.y * this.y);
+                this.normalize();
+                this.x *= length;
+                this.y *= length;
+                return this;
+            }
+            normalize() {
+                const length = this.length();
+                this.x /= length;
+                this.y /= length;
+                return this;
+            }
         }
 
-        setInterval(createHeart, 500);
+        /*
+         * Lớp Particle (Hạt sáng)
+         */
+        class Particle {
+            constructor() {
+                this.position = new Point();
+                this.velocity = new Point();
+                this.acceleration = new Point();
+                this.age = 0;
+            }
+            initialize(x, y, dx, dy) {
+                this.position.x = x;
+                this.position.y = y;
+                this.velocity.x = dx;
+                this.velocity.y = dy;
+                this.acceleration.x = dx * settings.particles.effect;
+                this.acceleration.y = dy * settings.particles.effect;
+                this.age = 0;
+            }
+            update(deltaTime) {
+                this.position.x += this.velocity.x * deltaTime;
+                this.position.y += this.velocity.y * deltaTime;
+                this.velocity.x += this.acceleration.x * deltaTime;
+                this.velocity.y += this.acceleration.y * deltaTime;
+                this.age += deltaTime;
+            }
+            draw(context, image) {
+                const ease = (t) => (--t) * t * t + 1;
+                const size = image.width * ease(this.age / settings.particles.duration);
+                context.globalAlpha = 1 - this.age / settings.particles.duration;
+                context.drawImage(image, this.position.x - size / 2, this.position.y - size / 2, size, size);
+            }
+        }
+
+        /*
+         * Quản lý ParticlePool (Bể hạt)
+         */
+        class ParticlePool {
+            constructor(length) {
+                this.particles = new Array(length).fill(null).map(() => new Particle());
+                this.firstActive = 0;
+                this.firstFree = 0;
+                this.duration = settings.particles.duration;
+            }
+            add(x, y, dx, dy) {
+                this.particles[this.firstFree].initialize(x, y, dx, dy);
+                this.firstFree++;
+                if (this.firstFree === this.particles.length) this.firstFree = 0;
+                if (this.firstActive === this.firstFree) this.firstActive++;
+                if (this.firstActive === this.particles.length) this.firstActive = 0;
+            }
+            update(deltaTime) {
+                let i;
+                if (this.firstActive < this.firstFree) {
+                    for (i = this.firstActive; i < this.firstFree; i++) this.particles[i].update(deltaTime);
+                }
+                if (this.firstFree < this.firstActive) {
+                    for (i = this.firstActive; i < this.particles.length; i++) this.particles[i].update(deltaTime);
+                    for (i = 0; i < this.firstFree; i++) this.particles[i].update(deltaTime);
+                }
+                while (this.particles[this.firstActive].age >= this.duration && this.firstActive !== this.firstFree) {
+                    this.firstActive++;
+                    if (this.firstActive === this.particles.length) this.firstActive = 0;
+                }
+            }
+            draw(context, image) {
+                let i;
+                if (this.firstActive < this.firstFree) {
+                    for (i = this.firstActive; i < this.firstFree; i++) this.particles[i].draw(context, image);
+                }
+                if (this.firstFree < this.firstActive) {
+                    for (i = this.firstActive; i < this.particles.length; i++) this.particles[i].draw(context, image);
+                    for (i = 0; i < this.firstFree; i++) this.particles[i].draw(context, image);
+                }
+            }
+        }
+
+        /*
+         * Khởi tạo hiệu ứng
+         */
+        (function (canvas) {
+            const context = canvas.getContext('2d');
+            const particles = new ParticlePool(settings.particles.length);
+            const particleRate = settings.particles.length / settings.particles.duration;
+            let time;
+
+            // Hàm tạo hình trái tim lý tưởng
+            function pointOnHeart(t) {
+                return new Point(
+                    160 * Math.pow(Math.sin(t), 3),
+                    130 * Math.cos(t) - 50 * Math.cos(2 * t) - 20 * Math.cos(3 * t) - 10 * Math.cos(4 * t) + 25
+                );
+            }
+
+            // Tạo texture hạt bụi phát sáng
+            const image = (function () {
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.width = settings.particles.size;
+                canvas.height = settings.particles.size;
+
+                function to(t) {
+                    const point = pointOnHeart(t);
+                    point.x = settings.particles.size / 3 + point.x * settings.particles.size / 550;
+                    point.y = settings.particles.size / 3 - point.y * settings.particles.size / 550;
+                    return point;
+                }
+
+                context.beginPath();
+                let t = -Math.PI;
+                let point = to(t);
+                context.moveTo(point.x, point.y);
+                while (t < Math.PI) {
+                    t += 0.01;
+                    point = to(t);
+                    context.lineTo(point.x, point.y);
+                }
+                context.closePath();
+                context.fillStyle = '#ea80b0'; // Giữ nguyên màu của bạn
+                context.fill();
+
+                // Thêm hiệu ứng Glow cho texture
+                const img = new Image();
+                img.src = canvas.toDataURL();
+                return img;
+            })();
+
+            function render() {
+                requestAnimationFrame(render);
+                const newTime = new Date().getTime() / 1000;
+                const deltaTime = newTime - (time || newTime);
+                time = newTime;
+
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                const amount = particleRate * deltaTime;
+                for (let i = 0; i < amount; i++) {
+                    let pos = pointOnHeart(Math.PI - 2 * Math.PI * Math.random());
+                    // Tỏa sâu vào trong khoảng 30%
+                    const factor = 1 - 0.3 * Math.random();
+                    pos.x *= factor;
+                    pos.y *= factor;
+
+                    const dir = pos.clone().length(settings.particles.velocity);
+                    particles.add(canvas.width / 2 + pos.x, canvas.height / 2 - pos.y, dir.x, -dir.y);
+                }
+
+                particles.update(deltaTime);
+                particles.draw(context, image);
+            }
+
+            function onResize() {
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+            }
+            window.onresize = onResize;
+
+            setTimeout(function () {
+                onResize();
+                render();
+            }, 10);
+        })(document.getElementById('pinkboard'));
     </script>
 </body>
+
 </html>
